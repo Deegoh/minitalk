@@ -6,12 +6,12 @@
 /*   By: tpinto-m <marvin@24lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 14:21:09 by tpinto-m          #+#    #+#             */
-/*   Updated: 2022/01/07 00:27:24 by tpinto-m         ###   ########.fr       */
+/*   Updated: 2022/01/11 11:49:39 by tpinto-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
-
+#include <stdlib.h>
 
 static int	ft_isspace(int c)
 {
@@ -49,17 +49,37 @@ static int	ft_atoi(const char *str)
 	return (res * sign);
 }
 
+void	atob(char c, pid_t pid)
+{
+	int	bit;
+
+	bit = 8;
+	while (bit)
+	{
+		bit--;
+		if ((c >> bit) & 1)
+			kill(pid, SIGUSR1);
+		else if (c)
+			kill(pid, SIGUSR2);
+		usleep(20);
+	}
+}
+
 int	main(int ac, char *av[])
 {
 	pid_t	pid;
+	char	*str;
+	int		i;
 
-	if (ac != 3)
+	if (ac != 3 || atoi(av[1]) < 0)
 	{
-		write(1, "Missing arg\n", 12);
+		write(1, "usage: ./client [srv-pid] [msg]\n", 34);
 		return (1);
 	}
 	pid = ft_atoi(av[1]);
-	printf("pid:%d\n", pid);
-	kill(pid, SIGUSR1);
+	str = av[2];
+	i = 0;
+	while (str[i])
+		atob(str[i++], pid);
 	return (0);
 }
