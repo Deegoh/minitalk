@@ -1,24 +1,27 @@
 CC = CC
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror
 NAME = minitalk
-CLT = client
 SRC_CLT = client.c
-SRV = server
 SRC_SRV = server.c
+SRC = utils.c
+OBJ = $(SRC:.c=.o)
+CLT = client
+SRV = server
 
 all: $(NAME)
 
-$(NAME): $(SRV) $(CLT)
+$(NAME): $(OBJ) $(SRV) $(CLT)
 
 $(SRV):
-	$(CC) $(CFLAGS) $(SRC_SRV) -o $(SRV)
+	$(CC) $(CFLAGS) $(SRC_SRV) $(OBJ) -o $(SRV)
 
-$(CLIENT):
-	$(CC) $(CFLAGS) $(SRC_CLT) -o $(CLT)
+$(CLT):
+	$(CC) $(CFLAGS) $(SRC_CLT) $(OBJ) -o $(CLT)
 
 clean:
 	rm -f $(SRV)
 	rm -f $(CLT)
+	rm -f $(OBJ)
 
 fclean: clean
 
