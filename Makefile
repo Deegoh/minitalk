@@ -3,28 +3,28 @@ CFLAGS = -Wall -Wextra -Werror
 NAME = minitalk
 SRC_CLT = client.c
 SRC_SRV = server.c
-SRC = utils.c
-OBJ = $(SRC:.c=.o)
 CLT = client
 SRV = server
+LIBFT_DIR = ./libft/
+INCLUDES = -I$(LIBFT_DIR)
+LIB = -lft -L $(LIBFT_DIR)
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(SRV) $(CLT)
+$(NAME): libft $(SRV) $(CLT)
 
 $(SRV):
-	$(CC) $(CFLAGS) $(SRC_SRV) $(OBJ) -o $(SRV)
-
+	$(CC) $(LIB) $(INCLUDES) $(CFLAGS) $(SRC_SRV) -o $(SRV)
 $(CLT):
-	$(CC) $(CFLAGS) $(SRC_CLT) $(OBJ) -o $(CLT)
-
+	$(CC) $(LIB) $(INCLUDES) $(CFLAGS) $(SRC_CLT) -o $(CLT)
+libft:
+	@$(MAKE) -sC $(LIBFT_DIR)
 clean:
 	rm -f $(SRV)
 	rm -f $(CLT)
 	rm -f $(OBJ)
-
 fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re libft

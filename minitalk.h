@@ -18,12 +18,4 @@
 # include <signal.h>
 # include <stdlib.h>
 
-int		ft_strlen(const char	*str);
-int		lennbr(int n);
-char	*ft_strdup(const char *s1);
-char	*ft_itoa(int n);
-int		ft_isspace(int c);
-int		ft_isdigit(int c);
-int		ft_atoi(const char *str);
-
 #endif
