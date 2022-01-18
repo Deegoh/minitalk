@@ -22,9 +22,9 @@ libft:
 clean:
 	rm -f $(SRV)
 	rm -f $(CLT)
-	rm -f $(OBJ)
+	$(MAKE) clean -sC $(LIBFT_DIR)
 fclean: clean
-
+	$(MAKE) fclean -sC $(LIBFT_DIR)
 re: fclean all
 
 .PHONY: all clean fclean re libft
